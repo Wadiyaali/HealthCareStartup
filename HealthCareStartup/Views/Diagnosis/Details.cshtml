@@ -1,0 +1,58 @@
+﻿@model HealthCareStartup.Models.Diagnosi
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Diagnosi</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Details)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Details)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Results)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Results)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Doctor.DName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Doctor.DName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Hospital.HName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Hospital.HName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Patient.Pname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Patient.Pname)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.DiagID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

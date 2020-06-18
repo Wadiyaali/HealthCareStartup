@@ -1,0 +1,429 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="OEL2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Diagnosis">
+          <Key>
+            <PropertyRef Name="DiagID" />
+          </Key>
+          <Property Name="DiagID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DocID" Type="int" />
+          <Property Name="PatID" Type="int" />
+          <Property Name="HospID" Type="int" />
+          <Property Name="Details" Type="varchar" MaxLength="2000" />
+          <Property Name="Results" Type="varchar" MaxLength="2000" />
+        </EntityType>
+        <EntityType Name="Doctors">
+          <Key>
+            <PropertyRef Name="DId" />
+          </Key>
+          <Property Name="DId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DName" Type="varchar" MaxLength="220" />
+          <Property Name="Dspec" Type="varchar" MaxLength="2000" />
+        </EntityType>
+        <EntityType Name="Hospitals">
+          <Key>
+            <PropertyRef Name="HId" />
+          </Key>
+          <Property Name="HId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HName" Type="varchar" MaxLength="220" />
+          <Property Name="HAddress" Type="varchar" MaxLength="2000" />
+        </EntityType>
+        <EntityType Name="Medicine">
+          <Key>
+            <PropertyRef Name="MedID" />
+          </Key>
+          <Property Name="MedID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MedName" Type="varchar" MaxLength="2000" />
+          <Property Name="MedDetails" Type="varchar" MaxLength="200" />
+          <Property Name="MedPrice" Type="int" />
+        </EntityType>
+        <EntityType Name="OnlineOrder">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MedID" Type="int" />
+          <Property Name="DiagID" Type="int" />
+          <Property Name="Quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="Patients">
+          <Key>
+            <PropertyRef Name="PId" />
+          </Key>
+          <Property Name="PId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Pname" Type="varchar" MaxLength="220" />
+          <Property Name="PAd" Type="varchar" MaxLength="1000" />
+          <Property Name="PatAge" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK__Diagnosis__DocID__3D5E1FD2">
+          <End Role="Doctors" Type="Self.Doctors" Multiplicity="0..1" />
+          <End Role="Diagnosis" Type="Self.Diagnosis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctors">
+              <PropertyRef Name="DId" />
+            </Principal>
+            <Dependent Role="Diagnosis">
+              <PropertyRef Name="DocID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Diagnosis__HospI__3F466844">
+          <End Role="Hospitals" Type="Self.Hospitals" Multiplicity="0..1" />
+          <End Role="Diagnosis" Type="Self.Diagnosis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospitals">
+              <PropertyRef Name="HId" />
+            </Principal>
+            <Dependent Role="Diagnosis">
+              <PropertyRef Name="HospID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Diagnosis__PatID__3E52440B">
+          <End Role="Patients" Type="Self.Patients" Multiplicity="0..1" />
+          <End Role="Diagnosis" Type="Self.Diagnosis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="PId" />
+            </Principal>
+            <Dependent Role="Diagnosis">
+              <PropertyRef Name="PatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OnlineOrd__DiagI__47DBAE45">
+          <End Role="Diagnosis" Type="Self.Diagnosis" Multiplicity="0..1" />
+          <End Role="OnlineOrder" Type="Self.OnlineOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Diagnosis">
+              <PropertyRef Name="DiagID" />
+            </Principal>
+            <Dependent Role="OnlineOrder">
+              <PropertyRef Name="DiagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OnlineOrd__MedID__46E78A0C">
+          <End Role="Medicine" Type="Self.Medicine" Multiplicity="0..1" />
+          <End Role="OnlineOrder" Type="Self.OnlineOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Medicine">
+              <PropertyRef Name="MedID" />
+            </Principal>
+            <Dependent Role="OnlineOrder">
+              <PropertyRef Name="MedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OEL2ModelStoreContainer">
+          <EntitySet Name="Diagnosis" EntityType="Self.Diagnosis" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Doctors" EntityType="Self.Doctors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hospitals" EntityType="Self.Hospitals" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Medicine" EntityType="Self.Medicine" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OnlineOrder" EntityType="Self.OnlineOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Patients" EntityType="Self.Patients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Diagnosis__DocID__3D5E1FD2" Association="Self.FK__Diagnosis__DocID__3D5E1FD2">
+            <End Role="Doctors" EntitySet="Doctors" />
+            <End Role="Diagnosis" EntitySet="Diagnosis" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Diagnosis__HospI__3F466844" Association="Self.FK__Diagnosis__HospI__3F466844">
+            <End Role="Hospitals" EntitySet="Hospitals" />
+            <End Role="Diagnosis" EntitySet="Diagnosis" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Diagnosis__PatID__3E52440B" Association="Self.FK__Diagnosis__PatID__3E52440B">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="Diagnosis" EntitySet="Diagnosis" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OnlineOrd__DiagI__47DBAE45" Association="Self.FK__OnlineOrd__DiagI__47DBAE45">
+            <End Role="Diagnosis" EntitySet="Diagnosis" />
+            <End Role="OnlineOrder" EntitySet="OnlineOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OnlineOrd__MedID__46E78A0C" Association="Self.FK__OnlineOrd__MedID__46E78A0C">
+            <End Role="Medicine" EntitySet="Medicine" />
+            <End Role="OnlineOrder" EntitySet="OnlineOrder" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OEL2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Diagnosi">
+          <Key>
+            <PropertyRef Name="DiagID" />
+          </Key>
+          <Property Name="DiagID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DocID" Type="Int32" />
+          <Property Name="PatID" Type="Int32" />
+          <Property Name="HospID" Type="Int32" />
+          <Property Name="Details" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="Results" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Doctor" Relationship="Self.FK__Diagnosis__DocID__3D5E1FD2" FromRole="Diagnosis" ToRole="Doctors" />
+          <NavigationProperty Name="Hospital" Relationship="Self.FK__Diagnosis__HospI__3F466844" FromRole="Diagnosis" ToRole="Hospitals" />
+          <NavigationProperty Name="Patient" Relationship="Self.FK__Diagnosis__PatID__3E52440B" FromRole="Diagnosis" ToRole="Patients" />
+          <NavigationProperty Name="OnlineOrders" Relationship="Self.FK__OnlineOrd__DiagI__47DBAE45" FromRole="Diagnosis" ToRole="OnlineOrder" />
+        </EntityType>
+        <EntityType Name="Doctor">
+          <Key>
+            <PropertyRef Name="DId" />
+          </Key>
+          <Property Name="DId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DName" Type="String" MaxLength="220" FixedLength="false" Unicode="false" />
+          <Property Name="Dspec" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Diagnosis" Relationship="Self.FK__Diagnosis__DocID__3D5E1FD2" FromRole="Doctors" ToRole="Diagnosis" />
+        </EntityType>
+        <EntityType Name="Hospital">
+          <Key>
+            <PropertyRef Name="HId" />
+          </Key>
+          <Property Name="HId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HName" Type="String" MaxLength="220" FixedLength="false" Unicode="false" />
+          <Property Name="HAddress" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Diagnosis" Relationship="Self.FK__Diagnosis__HospI__3F466844" FromRole="Hospitals" ToRole="Diagnosis" />
+        </EntityType>
+        <EntityType Name="Medicine">
+          <Key>
+            <PropertyRef Name="MedID" />
+          </Key>
+          <Property Name="MedID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MedName" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="MedDetails" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="MedPrice" Type="Int32" />
+          <NavigationProperty Name="OnlineOrders" Relationship="Self.FK__OnlineOrd__MedID__46E78A0C" FromRole="Medicine" ToRole="OnlineOrder" />
+        </EntityType>
+        <EntityType Name="OnlineOrder">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MedID" Type="Int32" />
+          <Property Name="DiagID" Type="Int32" />
+          <Property Name="Quantity" Type="Int32" />
+          <NavigationProperty Name="Diagnosi" Relationship="Self.FK__OnlineOrd__DiagI__47DBAE45" FromRole="OnlineOrder" ToRole="Diagnosis" />
+          <NavigationProperty Name="Medicine" Relationship="Self.FK__OnlineOrd__MedID__46E78A0C" FromRole="OnlineOrder" ToRole="Medicine" />
+        </EntityType>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="PId" />
+          </Key>
+          <Property Name="PId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Pname" Type="String" MaxLength="220" FixedLength="false" Unicode="false" />
+          <Property Name="PAd" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="PatAge" Type="Int32" />
+          <NavigationProperty Name="Diagnosis" Relationship="Self.FK__Diagnosis__PatID__3E52440B" FromRole="Patients" ToRole="Diagnosis" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK__Diagnosis__DocID__3D5E1FD2">
+          <End Role="Doctors" Type="Self.Doctor" Multiplicity="0..1" />
+          <End Role="Diagnosis" Type="Self.Diagnosi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctors">
+              <PropertyRef Name="DId" />
+            </Principal>
+            <Dependent Role="Diagnosis">
+              <PropertyRef Name="DocID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Diagnosis__HospI__3F466844">
+          <End Role="Hospitals" Type="Self.Hospital" Multiplicity="0..1" />
+          <End Role="Diagnosis" Type="Self.Diagnosi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospitals">
+              <PropertyRef Name="HId" />
+            </Principal>
+            <Dependent Role="Diagnosis">
+              <PropertyRef Name="HospID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Diagnosis__PatID__3E52440B">
+          <End Role="Patients" Type="Self.Patient" Multiplicity="0..1" />
+          <End Role="Diagnosis" Type="Self.Diagnosi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="PId" />
+            </Principal>
+            <Dependent Role="Diagnosis">
+              <PropertyRef Name="PatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OnlineOrd__DiagI__47DBAE45">
+          <End Role="Diagnosis" Type="Self.Diagnosi" Multiplicity="0..1" />
+          <End Role="OnlineOrder" Type="Self.OnlineOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Diagnosis">
+              <PropertyRef Name="DiagID" />
+            </Principal>
+            <Dependent Role="OnlineOrder">
+              <PropertyRef Name="DiagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OnlineOrd__MedID__46E78A0C">
+          <End Role="Medicine" Type="Self.Medicine" Multiplicity="0..1" />
+          <End Role="OnlineOrder" Type="Self.OnlineOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Medicine">
+              <PropertyRef Name="MedID" />
+            </Principal>
+            <Dependent Role="OnlineOrder">
+              <PropertyRef Name="MedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OEL2Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Diagnosis" EntityType="Self.Diagnosi" />
+          <EntitySet Name="Doctors" EntityType="Self.Doctor" />
+          <EntitySet Name="Hospitals" EntityType="Self.Hospital" />
+          <EntitySet Name="Medicines" EntityType="Self.Medicine" />
+          <EntitySet Name="OnlineOrders" EntityType="Self.OnlineOrder" />
+          <EntitySet Name="Patients" EntityType="Self.Patient" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <AssociationSet Name="FK__Diagnosis__DocID__3D5E1FD2" Association="Self.FK__Diagnosis__DocID__3D5E1FD2">
+            <End Role="Doctors" EntitySet="Doctors" />
+            <End Role="Diagnosis" EntitySet="Diagnosis" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Diagnosis__HospI__3F466844" Association="Self.FK__Diagnosis__HospI__3F466844">
+            <End Role="Hospitals" EntitySet="Hospitals" />
+            <End Role="Diagnosis" EntitySet="Diagnosis" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Diagnosis__PatID__3E52440B" Association="Self.FK__Diagnosis__PatID__3E52440B">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="Diagnosis" EntitySet="Diagnosis" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OnlineOrd__DiagI__47DBAE45" Association="Self.FK__OnlineOrd__DiagI__47DBAE45">
+            <End Role="Diagnosis" EntitySet="Diagnosis" />
+            <End Role="OnlineOrder" EntitySet="OnlineOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OnlineOrd__MedID__46E78A0C" Association="Self.FK__OnlineOrd__MedID__46E78A0C">
+            <End Role="Medicine" EntitySet="Medicines" />
+            <End Role="OnlineOrder" EntitySet="OnlineOrders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OEL2ModelStoreContainer" CdmEntityContainer="OEL2Entities">
+          <EntitySetMapping Name="Diagnosis">
+            <EntityTypeMapping TypeName="OEL2Model.Diagnosi">
+              <MappingFragment StoreEntitySet="Diagnosis">
+                <ScalarProperty Name="DiagID" ColumnName="DiagID" />
+                <ScalarProperty Name="DocID" ColumnName="DocID" />
+                <ScalarProperty Name="PatID" ColumnName="PatID" />
+                <ScalarProperty Name="HospID" ColumnName="HospID" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="Results" ColumnName="Results" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Doctors">
+            <EntityTypeMapping TypeName="OEL2Model.Doctor">
+              <MappingFragment StoreEntitySet="Doctors">
+                <ScalarProperty Name="DId" ColumnName="DId" />
+                <ScalarProperty Name="DName" ColumnName="DName" />
+                <ScalarProperty Name="Dspec" ColumnName="Dspec" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hospitals">
+            <EntityTypeMapping TypeName="OEL2Model.Hospital">
+              <MappingFragment StoreEntitySet="Hospitals">
+                <ScalarProperty Name="HId" ColumnName="HId" />
+                <ScalarProperty Name="HName" ColumnName="HName" />
+                <ScalarProperty Name="HAddress" ColumnName="HAddress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Medicines">
+            <EntityTypeMapping TypeName="OEL2Model.Medicine">
+              <MappingFragment StoreEntitySet="Medicine">
+                <ScalarProperty Name="MedID" ColumnName="MedID" />
+                <ScalarProperty Name="MedName" ColumnName="MedName" />
+                <ScalarProperty Name="MedDetails" ColumnName="MedDetails" />
+                <ScalarProperty Name="MedPrice" ColumnName="MedPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OnlineOrders">
+            <EntityTypeMapping TypeName="OEL2Model.OnlineOrder">
+              <MappingFragment StoreEntitySet="OnlineOrder">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="MedID" ColumnName="MedID" />
+                <ScalarProperty Name="DiagID" ColumnName="DiagID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Patients">
+            <EntityTypeMapping TypeName="OEL2Model.Patient">
+              <MappingFragment StoreEntitySet="Patients">
+                <ScalarProperty Name="PId" ColumnName="PId" />
+                <ScalarProperty Name="Pname" ColumnName="Pname" />
+                <ScalarProperty Name="PAd" ColumnName="PAd" />
+                <ScalarProperty Name="PatAge" ColumnName="PatAge" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="OEL2Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

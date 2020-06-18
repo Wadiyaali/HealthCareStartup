@@ -1,0 +1,42 @@
+﻿@model HealthCareStartup.Models.OnlineOrder
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>OnlineOrder</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Diagnosi.Details)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Diagnosi.Details)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Medicine.MedName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Medicine.MedName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.OrderID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

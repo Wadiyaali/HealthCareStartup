@@ -1,0 +1,83 @@
+﻿@model IEnumerable<HealthCareStartup.Models.OnlineOrder>
+
+@{
+                /**/
+
+                ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Diagnosi.Details)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Medicine.MedName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Quantity)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Diagnosi.Details)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Medicine.MedName)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.OrderID }) |
+        @Html.ActionLink("Details", "Details", new { id = item.OrderID }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.OrderID })
+    </td>
+</tr>
+}
+
+</table>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Medicine.MedID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Medicine.MedName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Medicine.MedPrice)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Medicine.MedID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Medicine.MedName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Medicine.MedPrice)
+        </td>
+        
+
+    </tr>
+}
+
+</table>
+<p>
+    @Html.ActionLink("Create New medicine", "Create")
+</p>

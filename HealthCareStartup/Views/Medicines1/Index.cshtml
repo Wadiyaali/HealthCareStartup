@@ -1,0 +1,45 @@
+﻿@model IEnumerable<HealthCareStartup.Models.Medicine>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 style="margin:1.2em;">Using Web API rest</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MedName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MedDetails)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MedPrice)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MedName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MedDetails)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MedPrice)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MedID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MedID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MedID })
+        </td>
+    </tr>
+}
+
+</table>

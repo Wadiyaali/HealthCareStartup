@@ -1,0 +1,42 @@
+﻿@model HealthCareStartup.Models.Medicine
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Medicine</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MedName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MedName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MedDetails)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MedDetails)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MedPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MedPrice)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MedID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
